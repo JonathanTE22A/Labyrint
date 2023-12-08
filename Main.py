@@ -42,7 +42,7 @@ def win(player):
 def generateitem():
     random_strength_bonus = random.randint(0, 10)
     weapons = [Item("Pilbåge", random_strength_bonus), Item("Svärd", random_strength_bonus), 
-            Item("Lans", random_strength_bonus), Item("Pinne", random_strength_bonus)]
+            Item("Spjut", random_strength_bonus), Item("Pinne", random_strength_bonus)]
     weapons = random.choice(weapons)
     return weapons
 
@@ -109,7 +109,7 @@ def fight(player, monster):
         elif fighting in ["S", "s"]:
             player.health -= 2
             print("du tog 2 damage")
-            time.sleep(4)
+            time.sleep(1)
             spel(player)
         else:
             pass
@@ -124,18 +124,19 @@ def damage(monster, player):
         player.strength += 1
         player.health += 1
         print("Du vann och gick upp i level, Grattis!")
+        print(f"Du är nu level {player.level}")
         if player.level >= 10:
             win(player)
         else:
             pass
-        time.sleep(2)
+        time.sleep(1)
 
 
 def start_labyrint():
     player_name = get_name()
     player = Player(10, 1, 1, player_name)
     print(f"Ditt äventyr har börjat {player_name}")
-    time.sleep(2)
+    time.sleep(1)
     spel(player)
 
 def wrong_written(answer):
@@ -182,7 +183,7 @@ def start():
                                           __/ |                 
                                          |___/                  
 
-                   Vill du börja ditt ävnentyr, ja eller nej? """)
+         Vill du börja ditt ävnentyr, ja eller nej? """)
     if answer == "ja":
         start_labyrint()
     elif answer == "nej":
