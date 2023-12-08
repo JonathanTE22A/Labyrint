@@ -53,10 +53,6 @@ def get_name(): # funktion till playerns nametag
     player_name = input("Namn: ")
     return player_name 
 
-player_name = ""
-
-player = Player(10, 1, 1, player_name) #Playerns stats
-
 # Här läggs funktioner för att interagera med spelet
 
 def check_health(player, damagedelt):
@@ -82,9 +78,19 @@ def reveal_chest(player):
     treasure = generateitem()
     print(f"Du hittade en kista! I den låg en {treasure.weapon_type}")
     if len(player.inventory) == 5:
-        player.removefrominventory(0)
-    else:
+        while True:
+            print("Ditt inventory är fullt! Vill du ta bort ett item och byta ut det? ja/nej")
+            var = input()
+            if var == "nej":
+                break
+            elif var == "ja":
+                player.removefrominventory(0)
+                break
+            else:
+                pass
+    else:                   
         player.inventory.append(treasure)
+
 
 def reveal_trap(player):
     print("Det var en fälla bakom dörren, din karaktär förlorade ett liv")
@@ -105,6 +111,7 @@ def damage(monster, player):
         print("Du förlora mot monstret")
     else:
         player.level += 1
+        player.strength += 1
         print("Du vann och gick upp i level, Grattis!")
         time.sleep(2)
 
@@ -112,6 +119,7 @@ def damage(monster, player):
 def start_labyrint():
     #omskrivningsdags!!!!
     player_name = get_name()
+    player = Player(10, 1, 1, player_name)
     print(f"Ditt äventyr har börjat {player_name}")
     time.sleep(2)
     spel()
