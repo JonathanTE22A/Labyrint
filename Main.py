@@ -122,7 +122,7 @@ def start_labyrint():
     player = Player(10, 1, 1, player_name)
     print(f"Ditt äventyr har börjat {player_name}")
     time.sleep(2)
-    spel()
+    spel(player)
 
     """while True:
         if answer.lower() == "ja":
