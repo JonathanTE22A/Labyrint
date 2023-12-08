@@ -51,7 +51,7 @@ def get_name(): # funktion till playerns nametag
 
 # Här läggs funktioner för att interagera med spelet
 
-def check_health(player, damagedelt):
+def check_health(player, damagedelt): #Här checkar 
     player.health -= damagedelt
     print(f"Du har {player.health}hp kvar")
     if player.health <= 0:
@@ -81,16 +81,16 @@ def reveal_chest(player):
                 break
             elif var == "ja":
                 print(f"{player.inventory[0].weapon_type} är borttagen!")
-                player.strength -= player.inventory[0].strength
+                player.strength -= player.inventory[0].damage
                 player.inventory.pop(0)
                 player.inventory.append(treasure)
-                player.strength += player.inventory[4].strength
+                player.strength += player.inventory[4].damage
                 break
             else:
                 pass
     else:                   
         player.inventory.append(treasure)
-        player.strength += treasure.strength
+        player.strength += treasure.damage
 
 
 def reveal_trap(player):
