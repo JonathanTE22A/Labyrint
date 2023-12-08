@@ -31,11 +31,14 @@ class Monster:
     def __init__(self, playerLevel):
         strength = random.randint((playerLevel-1)*2, playerLevel*2+2)
         if playerLevel >= 10:
-            print(f"Grattis!!! Du vann {Player.name}")
-            strength = random.randint(69, 420)
+            win()
         self.strength = strength
         monster_names = ["Taurus", "Bulten", "Muttern", "Krampus", "Stinger"]
         self.name = random.choice(monster_names)
+
+def win(player):
+    print(f"Grattis!!! Du vann {player.name}")
+    strength = random.randint(69, 420)
 
 # Här skapas vapen och exempel på spelare
 def generateitem():
@@ -99,12 +102,19 @@ def reveal_trap(player):
 
 #FIXA SÅ ATT MAN ENDAST KAN MATA IN A,a, S,s
 def fight(player, monster):
-    fighting = input("Tryck A om du vill attackera, eller S för att förlora 2 hp och gå vidare! : ")
-    if fighting == "A" or "a":
-        print(f"Du möter {monster.name}")
-        damage(monster, player)
-    elif fighting == "S" or "s":
-        player.health -= 2
+    while True:
+        fighting = input("Tryck A om du vill attackera, eller S för att förlora 2 hp och gå vidare! : ")
+        if fighting in ["A","a"]:
+            print(f"Du möter {monster.name}")
+            damage(monster, player)
+            spel(player)
+        elif fighting in ["S", "s"]:
+            player.health -= 2
+            print("du tog 2 damage")
+            time.sleep(4)
+            spel(player)
+        else:
+            pass
 
 def damage(monster, player):
     if monster.strength > player.strength:
@@ -120,7 +130,6 @@ def damage(monster, player):
 
 
 def start_labyrint():
-    #omskrivningsdags!!!!
     player_name = get_name()
     player = Player(10, 1, 1, player_name)
     print(f"Ditt äventyr har börjat {player_name}")
@@ -150,6 +159,7 @@ Välj smart!
     val1 = input("Vad väljer du: dörr 1, 2 eller 3? ")
     if val1 in ["1", "2", "3"]:
         val = random.randint(1,3)
+        val = 1
         if val == 1:
             reveal_monster(player)
         elif val == 2:
@@ -160,7 +170,7 @@ Välj smart!
         chose_door(player)
 
 def start():
-    answer = input("Vill du börja ditt ävnentyr? ")
+    answer = input("Vill du börja ditt ävnentyr, ja eller nej? ")
     if answer == "ja":
         start_labyrint()
     elif answer == "nej":
