@@ -7,13 +7,13 @@ class Item:
         self.critchanse = critchanse
 
     def presentweapon(self):
-        print("Du hittade " + self.weapon_type + " som gör "  + self.damage+ " skada och har en critchanse på " + self.critchanse)
+        print("Du hittade " + self.weapon_type + " som gör "  + self.damage+ " skada och har en critchanse på " + self.critchanse+"%")
 exp = ""
 
 
-def Level_system()
-if monster_hp() < player_hp():
-    level_up()
+def Level_system(): 
+    if monster_hp() < player_hp():
+        level_up()
     
 
 def level_up():
@@ -23,13 +23,14 @@ def level_up():
 
 
 
-Weapon1 = Item("Pilbåge", "15", "32%")
-Weapon2 = Item("Svärd", "20", "10%")
-Weapon3 = Item("Lans", "25", "5%")
-Weapon4 = Item("Pinne", "8", "50%")
-
-Weapon1.presentweapon()
-Weapon2.presentweapon()
-Weapon3.presentweapon()
-Weapon4.presentweapon()
-
+Weapon1 = Item("Pilbåge", 15, 32)
+Weapon2 = Item("Svärd", 20, 10)
+Weapon3 = Item("Lans", 25, 5)
+Weapon4 = Item("Pinne", 8, 50)
+class Inventroy:
+    def __init__(self):
+        self.items : list[Item] = []
+    
+    def print(self):
+        for item in self.items:
+            print(item)
