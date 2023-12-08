@@ -21,10 +21,6 @@ class Player: #Player klassen
         else:
             print("Ditt inventory är tomt.")
 
-    def removefrominventory(self, itemposition):
-        self.inventory.remove[itemposition]
-        print(f"{self.inventory[itemposition]} har blivit borttaget")
-
 
 class Item:
     def __init__(self, weapon_type, strength):
@@ -84,18 +80,24 @@ def reveal_chest(player):
             if var == "nej":
                 break
             elif var == "ja":
-                player.removefrominventory(0)
+                print(f"{player.inventory[0].weapon_type} är borttagen!")
+                player.strength -= player.inventory[0].strength
+                player.inventory.pop(0)
+                player.inventory.append(treasure)
+                player.strength += player.inventory[4].strength
                 break
             else:
                 pass
     else:                   
         player.inventory.append(treasure)
+        player.strength += treasure.strength
 
 
 def reveal_trap(player):
     print("Det var en fälla bakom dörren, din karaktär förlorade ett liv")
     check_health(player, 1)    
 
+#FIXA SÅ ATT MAN ENDAST KAN MATA IN A,a, S,s
 def fight(player, monster):
     fighting = input("Tryck A om du vill attackera, eller S för att förlora 2 hp och gå vidare! : ")
     if fighting == "A" or "a":
@@ -158,7 +160,7 @@ def get_name(): # funktion till playerns nametag
     return player_name 
 
 
-
+# FIXA SÅ ATT MAN ENDAST KAN MATA IN 1, 2, 3 OCH INTE ANNAT!!!!!!
 def chose_door(player):
     print(f"""
 Framför dig står tre dörrar. Bakom dörrarna kan det finnas en fälla, ett monster eller en kista.
@@ -167,6 +169,7 @@ Välj smart!
     """)
     input("Vad väljer du: dörr 1, 2 eller 3? ")
     val = random.randint(1,3)
+    val = 2
     if val == 1:
         reveal_monster(player)
     elif val == 2:
