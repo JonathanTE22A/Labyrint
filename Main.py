@@ -107,8 +107,8 @@ def fight(player, monster):
 def damage(monster, player):
     if monster.strength > player.strength:
         damagedelt = 1
-        check_health(player, damagedelt)
         print("Du förlora mot monstret")
+        check_health(player, damagedelt)
     else:
         player.level += 1
         player.strength += 1
@@ -185,7 +185,7 @@ def start():
         print("Det är en ja/nej fråga!!!!!!")
         start()
 
-def spel():
+def spel(player):
     while True:
         
         command = input("Tryck 'i' och Enter för att kolla ditt inventory, eller annan tangent för att fortsätta: ")
