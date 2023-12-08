@@ -126,27 +126,6 @@ def start_labyrint():
     time.sleep(2)
     spel(player)
 
-    """while True:
-        if answer.lower() == "ja":
-            player_name = get_name() # skickar dig till name_tag funktionen om du skriver yes
-            advetnture_start = print(f"Ditt äventyr har börjat {player_name}")
-            return advetnture_start
-        elif answer.lower() == "nej":   # Om no är input frågar programet om du vill avsluta spelet
-            end = input("Vill du avsluta spelet? ")
-            if end == "ja": # programet ska avslutas, hur man nu gör det
-                exit()
-            elif end.lower() == "nej": # om man skriver no ska man tillbaka till första if statement
-                start_labyrint(input("Vill du fortsätta ditt äventyr? "))
-                pass
-            else:
-                wrong_written(answer)
-                start_labyrint(answer)
-                break
-        else:
-            wrong_written(answer) # om man inte skriver yes eller no får de reda på det, vill att det ska skickas till första if
-            start_labyrint(answer)
-            break"""
-
 def wrong_written(answer):
     if not answer == "ja" or "nej":
         print("Det är en ja eller nej fråga!")
@@ -169,7 +148,6 @@ Välj smart!
     """)
     input("Vad väljer du: dörr 1, 2 eller 3? ")
     val = random.randint(1,3)
-    val = 2
     if val == 1:
         reveal_monster(player)
     elif val == 2:
