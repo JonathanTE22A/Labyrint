@@ -31,7 +31,7 @@ class Monster:
     def __init__(self, playerLevel):
         strength = random.randint((playerLevel-1)*2, playerLevel*2+2)
         if playerLevel >= 10:
-            print(f"Grattis!!! Du vann {player.name}")
+            print(f"Grattis!!! Du vann {Player.name}")
             strength = random.randint(69, 420)
         self.strength = strength
         monster_names = ["Taurus", "Bulten", "Muttern", "Krampus", "Stinger"]
@@ -114,6 +114,7 @@ def damage(monster, player):
     else:
         player.level += 1
         player.strength += 1
+        player.health += 1
         print("Du vann och gick upp i level, Grattis!")
         time.sleep(2)
 
@@ -146,14 +147,17 @@ Framför dig står tre dörrar. Bakom dörrarna kan det finnas en fälla, ett mo
 Du {player.name} har ett val.
 Välj smart!
     """)
-    input("Vad väljer du: dörr 1, 2 eller 3? ")
-    val = random.randint(1,3)
-    if val == 1:
-        reveal_monster(player)
-    elif val == 2:
-        reveal_chest(player)
-    elif val == 3:
-        reveal_trap(player)
+    val1 = input("Vad väljer du: dörr 1, 2 eller 3? ")
+    if val1 in ["1", "2", "3"]:
+        val = random.randint(1,3)
+        if val == 1:
+            reveal_monster(player)
+        elif val == 2:
+            reveal_chest(player)
+        elif val == 3:
+            reveal_trap(player)
+    else:
+        chose_door(player)
 
 def start():
     answer = input("Vill du börja ditt ävnentyr? ")
