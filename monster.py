@@ -1,11 +1,12 @@
 import random
 from os import system
+import time
 
 def clearConsole():
     """städar bort saker i terminal"""
     system("cls || clear")
 
-class Player:
+class Player: #Player klassen
     def __init__(self, health, strength, level, player_name):
         self.health = health 
         self.strength = strength
@@ -41,9 +42,12 @@ class Monster:
         self.name = random.choice(monster_names)
 
 # Här skapas vapen och exempel på spelare
-random_strength_bonus = 2
-weapons = [Item("Pilbåge", random_strength_bonus), Item("Svärd", random_strength_bonus), 
-           Item("Lans", random_strength_bonus), Item("Pinne", random_strength_bonus)]
+def generateitem():
+    random_strength_bonus = random.randint(0, 10)
+    weapons = [Item("Pilbåge", random_strength_bonus), Item("Svärd", random_strength_bonus), 
+            Item("Lans", random_strength_bonus), Item("Pinne", random_strength_bonus)]
+    weapons = random.choice(weapons)
+    return weapons
 
 def get_name(): # funktion till playerns nametag
     player_name = input("Namn: ")
@@ -51,18 +55,19 @@ def get_name(): # funktion till playerns nametag
 
 player_name = ""
 
-player = Player(1, 1, 1, player_name)
+player = Player(10, 1, 1, player_name) #Playerns stats
 
 # Här läggs funktioner för att interagera med spelet
 
 def check_health(player, damagedelt):
     player.health -= damagedelt
+    print(f"Du har {player.health}hp kvar")
     if player.health <= 0:
         print("Du förlora! get good!")
         if_continue = input("tryck på W för att fortsätta:")
-        if if_continue == "W":
+        if if_continue == "W" or "w":
             clearConsole()
-            start_labyrint(input("Vill du börja ditt ävnentyr? "))
+            start()
         else:
             exit()
     else:
@@ -74,7 +79,7 @@ def reveal_monster(player):
     fight(player, monster)
 
 def reveal_chest(player):
-    treasure = random.choice(weapons)
+    treasure = generateitem()
     print(f"Du hittade en kista! I den låg en {treasure.weapon_type}")
     if len(player.inventory) == 5:
         player.removefrominventory(0)
@@ -85,27 +90,33 @@ def reveal_trap(player):
     print("Det var en fälla bakom dörren, din karaktär förlorade ett liv")
     check_health(player, 1)    
 
-
 def fight(player, monster):
     fighting = input("Tryck A om du vill attackera, eller S för att förlora 2 hp och gå vidare! : ")
-    if fighting.upper == "A":
+    if fighting == "A" or "a":
         print(f"Du möter {monster.name}")
         damage(monster, player)
-    elif fighting.upper == "S":
+    elif fighting == "S" or "s":
         player.health -= 2
 
 def damage(monster, player):
     if monster.strength > player.strength:
         damagedelt = 1
-        check_health(damagedelt)
+        check_health(player, damagedelt)
         print("Du förlora mot monstret")
     else:
         player.level += 1
         print("Du vann och gick upp i level, Grattis!")
+        time.sleep(2)
 
 
-def start_labyrint(answer):
-    while True:
+def start_labyrint():
+    #omskrivningsdags!!!!
+    player_name = get_name()
+    print(f"Ditt äventyr har börjat {player_name}")
+    time.sleep(2)
+    spel()
+
+    """while True:
         if answer.lower() == "ja":
             player_name = get_name() # skickar dig till name_tag funktionen om du skriver yes
             advetnture_start = print(f"Ditt äventyr har börjat {player_name}")
@@ -124,11 +135,13 @@ def start_labyrint(answer):
         else:
             wrong_written(answer) # om man inte skriver yes eller no får de reda på det, vill att det ska skickas till första if
             start_labyrint(answer)
-            break
+            break"""
 
 def wrong_written(answer):
-    if not input == "ja" or "nej":
+    if not answer == "ja" or "nej":
         print("Det är en ja eller nej fråga!")
+    else:
+        pass
 
 advetnture_start = ""
 
@@ -136,7 +149,7 @@ def get_name(): # funktion till playerns nametag
     player_name = input("Namn: ")
     return player_name 
 
-answer = start_labyrint(input("Vill du börja ditt ävnentyr? "))
+
 
 def chose_door(player):
     print(f"""
@@ -153,9 +166,23 @@ Välj smart!
     elif val == 3:
         reveal_trap(player)
 
-while True:
-    clearConsole()
-    command = input("Tryck 'i' och Enter för att kolla ditt inventory, eller annan tangent för att fortsätta: ")
-    if command.lower() == 'i':
-        player.check_inventory()
-    chose_door(player)
+def start():
+    answer = input("Vill du börja ditt ävnentyr? ")
+    if answer == "ja":
+        start_labyrint()
+    elif answer == "nej":
+        print("Okej :(")
+        exit()
+    else:
+        print("Det är en ja/nej fråga!!!!!!")
+        start()
+
+def spel():
+    while True:
+        
+        command = input("Tryck 'i' och Enter för att kolla ditt inventory, eller annan tangent för att fortsätta: ")
+        if command.lower() == 'i':
+            player.check_inventory()
+        chose_door(player)
+
+start()
