@@ -30,15 +30,13 @@ class Item:
 class Monster:
     def __init__(self, playerLevel):
         strength = random.randint((playerLevel-1)*2, playerLevel*2+2)
-        if playerLevel >= 10:
-            win()
         self.strength = strength
         monster_names = ["Taurus", "Bulten", "Muttern", "Krampus", "Stinger"]
         self.name = random.choice(monster_names)
 
 def win(player):
     print(f"Grattis!!! Du vann {player.name}")
-    strength = random.randint(69, 420)
+    exit()
 
 # Här skapas vapen och exempel på spelare
 def generateitem():
@@ -126,6 +124,10 @@ def damage(monster, player):
         player.strength += 1
         player.health += 1
         print("Du vann och gick upp i level, Grattis!")
+        if player.level >= 10:
+            win(player)
+        else:
+            pass
         time.sleep(2)
 
 
@@ -159,7 +161,6 @@ Välj smart!
     val1 = input("Vad väljer du: dörr 1, 2 eller 3? ")
     if val1 in ["1", "2", "3"]:
         val = random.randint(1,3)
-        val = 1
         if val == 1:
             reveal_monster(player)
         elif val == 2:
@@ -170,7 +171,18 @@ Välj smart!
         chose_door(player)
 
 def start():
-    answer = input("Vill du börja ditt ävnentyr, ja eller nej? ")
+    answer = input("""
+                   
+  _______ _            _           _                _       _   
+ |__   __| |          | |         | |              (_)     | |  
+    | |  | |__   ___  | |     __ _| |__  _   _ _ __ _ _ __ | |_ 
+    | |  | '_ \ / _ \ | |    / _` | '_ \| | | | '__| | '_ \| __|
+    | |  | | | |  __/ | |___| (_| | |_) | |_| | |  | | | | | |_ 
+    |_|  |_| |_|\___| |______\__,_|_.__/ \__, |_|  |_|_| |_|\__|
+                                          __/ |                 
+                                         |___/                  
+
+                   Vill du börja ditt ävnentyr, ja eller nej? """)
     if answer == "ja":
         start_labyrint()
     elif answer == "nej":
